@@ -24,8 +24,14 @@
     switch ($method) {
         case 'POST':
             switch ($url[0]) {
-                case 'sendMsg':
-                    startSeg();
+                case 'fullMode':
+                    fullMode();
+                    break;
+                case 'defaultMode':
+                    defaultMode();
+                    break;
+                case 'SEMode':
+                    SEMode();
                     break;
                 default:
                     echo 'POST ERROR';
@@ -39,13 +45,23 @@
     }
 
 
-    function startSeg() {
+    function fullMode() {
         $seg = $_POST['seg'];
-        $seg_list = Jieba::cut($seg);
+        $seg_list = Jieba::cut($seg, true);
         echo json_encode($seg_list);
     }
-    // $seg_list = Jieba::cut("在新伺服器詳細資料表單中填寫下列資訊");
-    // var_dump($seg_list);
+
+    function defaultMode() {
+        $seg = $_POST['seg'];
+        $seg_list = Jieba::cut($seg, false);
+        echo json_encode($seg_list);
+    }
+
+    function SEMode() {
+        $seg = $_POST['seg'];
+        $seg_list = Jieba::cutForSearch($seg);
+        echo json_encode($seg_list);
+    }
 
 ?>
 

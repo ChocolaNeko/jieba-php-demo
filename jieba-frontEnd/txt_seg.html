@@ -12,12 +12,25 @@
 
 <body>
     <div id="seg">
-        <input type="text" v-model="input">
-        <button @click="startSeg">
-            開始分詞
+        <input type="text" v-model="input" style="width: 1250px;">
+        <br><br>
+        <button @click="fullMode">
+            Full Mode
+        </button>
+        <button @click="defaultMode">
+            Default Mode
+        </button>
+        <button @click="SEMode">
+            Search Engine Mode
         </button>
         <hr>
-        {{ result }}
+        Full Mode : {{ resultA }}
+        <hr>
+        Default Mode : {{ resultB }}
+        <hr>
+        Search Engine Mode : {{ resultC }}
+        <hr>
+
     </div>
 
     <script>
@@ -25,22 +38,51 @@
             el: "#seg",
             data: {
                 input: "",
-                result: "", 
+                resultA: "", 
+                resultB: "", 
+                resultC: "", 
+                resultD: "", 
             },
             methods: {
-                startSeg: function () {
+                fullMode: function () {
                     let _this = this;
                     let formData = new FormData();
                     formData.append('seg', this.input);
 
-                    axios.post('http://localhost/jieba-php-demo/jieba-backEnd/sendMsg', formData)
+                    axios.post('http://localhost/jieba-php-demo/jieba-backEnd/fullMode', formData)
                         .then(function (response) {
                             console.log(response.data);
-                            _this.result = response.data;
+                            _this.resultA = response.data;
                         }).catch(function (error) {
                             console.log(error);
                         });
-                }
+                },
+                defaultMode: function () {
+                    let _this = this;
+                    let formData = new FormData();
+                    formData.append('seg', this.input);
+
+                    axios.post('http://localhost/jieba-php-demo/jieba-backEnd/defaultMode', formData)
+                        .then(function (response) {
+                            console.log(response.data);
+                            _this.resultB = response.data;
+                        }).catch(function (error) {
+                            console.log(error);
+                        });
+                },
+                SEMode: function () {
+                    let _this = this;
+                    let formData = new FormData();
+                    formData.append('seg', this.input);
+
+                    axios.post('http://localhost/jieba-php-demo/jieba-backEnd/SEMode', formData)
+                        .then(function (response) {
+                            console.log(response.data);
+                            _this.resultC = response.data;
+                        }).catch(function (error) {
+                            console.log(error);
+                        });
+                },
             },
         });
     </script>
